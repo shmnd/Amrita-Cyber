@@ -38,7 +38,9 @@ urlpatterns = [
     path('',RedirectView.as_view(url='api/docs/',)),
 
     re_path(r'^api/',include([
-        # path('home/', include('evalutions.urls')),
+        path('home/', include('evalutions.urls')),
+
+
 
 
         re_path(r'^docs/', include([
