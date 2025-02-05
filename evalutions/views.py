@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from rest_framework import status
-from evaluation_core.helpers.response import ResponseInfo
 from rest_framework.response import Response
 from rest_framework import generics
-from evalutions.serializer import EvaluationRequestSerializer
 from drf_yasg.utils import swagger_auto_schema
+from .tasks import process_evaluation
+from evaluation_core.helpers.response import ResponseInfo
 from evalutions.models import EvaluationRequest
+from evalutions.serializer import EvaluationRequestSerializer
+
 # Create your views here.
-
-
 class SubmitEvaluationRequest(generics.GenericAPIView):
     def __init__(self, **kwargs):
         self.response_format = ResponseInfo().response
@@ -26,6 +26,9 @@ class SubmitEvaluationRequest(generics.GenericAPIView):
                 return Response(self.response_format,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                         
             evaluation = serializer.save(status='pending')
+            print(evaluation.id,'iddddddddddddd')
+            process_evaluation(evaluation.id)
+
 
             self.response_format["status_code"] = status.HTTP_201_CREATED
             self.response_format["status"] = True
@@ -52,7 +55,7 @@ class RetrieveEvaluationResult(generics.GenericAPIView):
     @swagger_auto_schema(tags=['Home'])
     def get(self, request, id):
         try:
-            print(id,'iddddddddddddd')
+            print(request,'iddddddddddddd')
             evaluation = EvaluationRequest.objects.get(id=id)
             print(evaluation,'eval222222222222222222222')
             serializer = self.serializer_class(evaluation)
