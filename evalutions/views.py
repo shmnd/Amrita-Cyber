@@ -26,7 +26,6 @@ class SubmitEvaluationRequest(generics.GenericAPIView):
                 return Response(self.response_format,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
                         
             evaluation = serializer.save(status='pending')
-            print(evaluation.id,'iddddddddddddd')
             process_evaluation(evaluation.id)
 
 
@@ -55,9 +54,7 @@ class RetrieveEvaluationResult(generics.GenericAPIView):
     @swagger_auto_schema(tags=['Home'])
     def get(self, request, id):
         try:
-            print(request,'iddddddddddddd')
             evaluation = EvaluationRequest.objects.get(id=id)
-            print(evaluation,'eval222222222222222222222')
             serializer = self.serializer_class(evaluation)
             
             self.response_format["status_code"] = status.HTTP_200_OK

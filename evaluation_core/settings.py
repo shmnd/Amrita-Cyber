@@ -49,6 +49,7 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'debug_toolbar',
     'django_celery_beat',
+    'evaluation_core',
 
 ]
 
@@ -157,7 +158,11 @@ EMAIL_HOST_PASSWORD   = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_DOMAIN          = os.environ.get('EMAIL_DOMAIN')
 EMAIL_PORT            = os.environ.get('EMAIL_PORT')
 DEFAULT_FROM_EMAIL    = os.environ.get('DEFAULT_FROM_EMAIL')
+RECIEVER_EMAIL        = os.environ.get('RECIEVER_EMAIL')
 
+RESEND_API_KEY = os.environ.get('RESEND_API_KEYSS')
+RESEND_API_FROM = os.environ.get('RESEND_API_FROM')
+RESEND_API_TO = os.environ.get('RESEND_API_TO')
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
